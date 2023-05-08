@@ -20,8 +20,10 @@
         </div>
         <div class="flex flex-1 justify-between sm:justify-end">
             <Link :href="previous"
+                  preserve-state
                class="relative inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus-visible:outline-offset-0">Previous</Link>
             <Link :href="next"
+                  preserve-state
                class="relative ml-3 inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus-visible:outline-offset-0">Next</Link>
         </div>
     </nav>
