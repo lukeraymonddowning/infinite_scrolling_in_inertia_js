@@ -5,7 +5,7 @@ import List from "@/Components/List.vue";
 import ListItem from "@/Components/ListItem.vue";
 import Comment from "@/Components/Comment.vue";
 import Pagination from "@/Components/Pagination.vue";
-import {ref, watch} from "vue";
+import {onMounted, ref, watch} from "vue";
 
 const props = defineProps({
     comments: {
@@ -32,6 +32,22 @@ const loadMoreItems = () => {
         },
     });
 };
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+            loadMoreItems();
+        }
+    });
+}, {
+    rootMargin: '200% 0px 0px 0px',
+});
+
+const landmark = ref(null);
+
+onMounted(() => {
+    observer.observe(landmark.value);
+});
 </script>
 
 <template>
@@ -48,7 +64,7 @@ const loadMoreItems = () => {
             </Comment>
         </List>
 
-        <Link @click="loadMoreItems">Load more</Link>
+        <div ref="landmark"></div>
 
 <!--        <Pagination :previous="props.comments.prev_page_url"-->
 <!--                    :next="props.comments.next_page_url"-->
