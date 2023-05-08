@@ -40,7 +40,7 @@ const observer = new IntersectionObserver((entries) => {
         }
     });
 }, {
-    rootMargin: '200% 0px 0px 0px',
+    rootMargin: '0px 0px 150px 0px'
 });
 
 const landmark = ref(null);
@@ -64,7 +64,7 @@ onMounted(() => {
             </Comment>
         </List>
 
-        <div ref="landmark"></div>
+        <div ref="landmark" class="h-2"></div>
 
 <!--        <Pagination :previous="props.comments.prev_page_url"-->
 <!--                    :next="props.comments.next_page_url"-->
