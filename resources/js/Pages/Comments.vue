@@ -6,6 +6,7 @@ import ListItem from "@/Components/ListItem.vue";
 import Comment from "@/Components/Comment.vue";
 import Pagination from "@/Components/Pagination.vue";
 import {onMounted, ref, watch} from "vue";
+import {useInfiniteScroll} from "@/Composables/useInfiniteScroll";
 
 const props = defineProps({
     comments: {
@@ -14,40 +15,9 @@ const props = defineProps({
     }
 });
 
-const items = ref(props.comments.data);
-
-const initialUrl = usePage().url;
-
-const loadMoreItems = () => {
-    if (! props.comments.next_page_url) {
-        return;
-    }
-
-    router.get(props.comments.next_page_url, {}, {
-        preserveState: true,
-        preserveScroll: true,
-        onSuccess: () => {
-            window.history.replaceState({}, '', initialUrl);
-            items.value = [...items.value, ...props.comments.data];
-        },
-    });
-};
-
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-            loadMoreItems();
-        }
-    });
-}, {
-    rootMargin: '0px 0px 150px 0px'
-});
-
 const landmark = ref(null);
 
-onMounted(() => {
-    observer.observe(landmark.value);
-});
+const {items} = useInfiniteScroll('comments', landmark);
 </script>
 
 <template>
@@ -64,13 +34,7 @@ onMounted(() => {
             </Comment>
         </List>
 
-        <div ref="landmark" class="h-2"></div>
-
-<!--        <Pagination :previous="props.comments.prev_page_url"-->
-<!--                    :next="props.comments.next_page_url"-->
-<!--                    :from="props.comments.from"-->
-<!--                    :to="props.comments.to"-->
-<!--                    :total="props.comments.total"/>-->
+        <div ref="landmark"></div>
     </Shell>
 </template>
 
