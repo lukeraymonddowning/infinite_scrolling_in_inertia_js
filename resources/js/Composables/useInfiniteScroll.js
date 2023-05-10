@@ -19,6 +19,7 @@ export function useInfiniteScroll(propName, landmark = null) {
         router.get(value().next_page_url, {}, {
             preserveState: true,
             preserveScroll: true,
+            only: [propName],
             onSuccess: () => {
                 window.history.replaceState({}, '', initialUrl);
                 items.value = [...items.value, ...value().data];
