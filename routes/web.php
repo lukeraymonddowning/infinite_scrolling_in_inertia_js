@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CommentsController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\VideoController;
 use App\Models\Comment;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -20,3 +21,5 @@ use Inertia\Inertia;
 
 Route::get('/', CommentsController::class);
 Route::get('/comments', fn() => Comment::all());
+
+Route::get('/videos', VideoController::class);
